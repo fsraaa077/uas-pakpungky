@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koben Kasir</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f9fa;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+    }
+    .menu-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .menu-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .menu-item h3 {
+      margin: 10px 0 5px;
+      font-size: 16px;
+    }
+    .menu-item p {
+      margin: 0;
+      color: #666;
+    }
+    .menu-item button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-item button:hover {
+      background: #cc0000;
+    }
+    .cart {
+      margin-top: 30px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .cart h2 {
+      margin-top: 0;
+    }
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    .cart ul li {
+      margin: 5px 0;
+    }
+    .cart .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍱 Menu Kasir Koben</h1>
+  <div class="menu-container" id="menu"></div>
+
+  <div class="cart">
+    <h2>🛒 Keranjang</h2>
+    <ul id="cart-list"></ul>
+    <p class="total">Total: Rp <span id="total">0</span></p>
+  </div>
+
+  <script>
+    const menu = [
+      { nama: "Hemat A", harga: 12000, gambar: "images/hemat-a.jpg" },
+      { nama: "Mix B", harga: 13000, gambar: "images/mix-b.jpg" },
+      { nama: "Mix C", harga: 15000, gambar: "images/mix-c.jpg" },
+      { nama: "Mix D", harga: 16000, gambar: "images/mix-d.jpg" },
+      { nama: "Mix E", harga: 17000, gambar: "images/mix-e.jpg" },
+      { nama: "Chicken Teriyaki A", harga: 28000, gambar: "images/chicken-teriyaki-a.jpg" },
+      { nama: "Chicken Katsu", harga: 20000, gambar: "images/chicken-katsu.jpg" },
+      { nama: "Beef Teriyaki A", harga: 30000, gambar: "images/beef-teriyaki-a.jpg" },
+      { nama: "Beef Teriyaki B", harga: 33000, gambar: "images/beef-teriyaki-b.jpg" },
+      { nama: "Chicken Spicy Teriyaki", harga: 25000, gambar: "images/chicken-spicy-teriyaki.jpg" },
+      { nama: "Ice Strawberry Tea", harga: 8000, gambar: "images/ice-strawberry-tea.jpg" },
+      { nama: "Ice Lychee Tea", harga: 8000, gambar: "images/ice-lychee-tea.jpg" },
+      { nama: "Ice Jasmine Tea", harga: 5000, gambar: "images/ice-jasmine-tea.jpg" },
+      { nama: "Extra Nasi", harga: 2000, gambar: "images/nasi.jpg" },
+      { nama: "Egg Roll", harga: 4000, gambar: "images/egg-roll.jpg" },
+      { nama: "Chicken Spicy", harga: 5000, gambar: "images/chicken-spicy.jpg" },
+      { nama: "Ekkado", harga: 6000, gambar: "images/ekkado.jpg" },
+      { nama: "Ebi Furay", harga: 6000, gambar: "images/ebi-furay.jpg" }
+    ];
+
+    const menuContainer = document.getElementById("menu");
+    const cartList = document.getElementById("cart-list");
+    const totalEl = document.getElementById("total");
+    let cart = [];
+    let total = 0;
+
+    menu.forEach(item => {
+      const div = document.createElement("div");
+      div.classList.add("menu-item");
+      div.innerHTML = `
+        <img src="${item.gambar}" alt="${item.nama}">
+        <h3>${item.nama}</h3>
+        <p>Rp ${item.harga.toLocaleString()}</p>
+        <button onclick="addToCart('${item.nama}', ${item.harga})">Tambah</button>
+      `;
+      menuContainer.appendChild(div);
+    });
+
+    function addToCart(nama, harga) {
+      cart.push({ nama, harga });
+      total += harga;
+      renderCart();
+    }
+
+    function renderCart() {
+      cartList.innerHTML = "";
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nama} - Rp ${item.harga.toLocaleString()}`;
+        cartList.appendChild(li);
+      });
+      totalEl.textContent = total.toLocaleString();
+    }
+  </script>
+</body>
+</html>
